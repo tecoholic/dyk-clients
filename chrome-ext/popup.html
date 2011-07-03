@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<style>
+	body{
+		min-width: 250px;
+		height: auto;
+		}
+	#text{
+		border-bottom: 1px solid #999;
+		}
+</style>
+<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+
+<body>
+<div id="text"></div>
+<div id="meta"></div>
+<div id="images"></div>
+<script>
+var url="http://dykapi.appspot.com/api/?format=json";
+$.get(url, dataType="json", function (data) {
+	var hookData = eval("("+data+")");
+	$('#text').append("<h4>"+(hookData.response[0].hook.title)+"</h4>","<p>"+(hookData.response[0].hook.text)+"</p>");
+	$('#meta').append("<h4>Related Wikipedia Links</h4>");
+	var i=0;
+	while(hookData.response[0].hook.metadata.length > i)
+	{
+		$("#meta").append("<li><a href=\""+hookData.response[0].hook.metadata[i].metaurl+"\">"+hookData.response[0].hook.metadata[i].metatext+"</a></li>");
+		i++;
+	}
+});
+</script>
+</body>
+</html>
