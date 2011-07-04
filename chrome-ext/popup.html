@@ -4,10 +4,24 @@
 	body{
 		min-width: 250px;
 		height: auto;
+		font-family: Arial, "MS Trebuchet", sans-serif;
+		font-size: 12px;
 		}
-	#text{
-		border-bottom: 1px solid #999;
+
+	#meta li{
+		list
 		}
+	#next{
+		width: 48px;
+		height: 19px;
+		float: right;
+		margin: 5px 10px;
+		cursor: pointer;
+		background-image: url("next-48.png");
+		}
+	#next:hover{
+		background-image: url("next-48-hover.png");
+	}
 </style>
 <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 
@@ -15,19 +29,26 @@
 <div id="text"></div>
 <div id="meta"></div>
 <div id="images"></div>
+<div id="next" onclick="window.location.reload()">
+</div>
 <script>
+function replaceUscore(title){ var newstr = title.split("_"); return newstr.join(" "); }
 var url="http://dykapi.appspot.com/api/?format=json";
 $.get(url, dataType="json", function (data) {
 	var hookData = eval("("+data+")");
-	$('#text').append("<h4>"+(hookData.response[0].hook.title)+"</h4>","<p>"+(hookData.response[0].hook.text)+"</p>");
+	$('#text').append("<h4>"+replaceUscore(hookData.response[0].hook.title)+"</h4>",
+					"<p>"+hookData.response[0].hook.text+"</p>");
 	$('#meta').append("<h4>Related Wikipedia Links</h4>");
 	var i=0;
-	while(hookData.response[0].hook.metadata.length > i)
-	{
-		$("#meta").append("<li><a href=\""+hookData.response[0].hook.metadata[i].metaurl+"\">"+hookData.response[0].hook.metadata[i].metatext+"</a></li>");
-		i++;
+	while(hookData.response[0].hook.metadata.length > i){
+	var li = "<li><a href=\"#\" ";
+	li += "onclick=\"chrome.tabs.create({'url': '"+hookData.response[0].hook.metadata[i].metaurl+"', 'selected' : true});\">";
+	li += hookData.response[0].hook.metadata[i].metatext+"</a></li>"
+	$("#meta").append(li);
+	i++;
 	}
 });
+
 </script>
 </body>
 </html>

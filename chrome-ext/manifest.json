@@ -1,13 +1,14 @@
 {
   "name": "DYK WikiFacts",
-  "version": "0.1.0",
-  "description": "DYK WikiFacts fetches Did You Know Facts from the Wikipedia.",
+  "version": "0.1.5",
+  "description": "DYK WikiFacts fetches Did You Know facts from the Wikipedia and provides links to the pages related to the fact.",
   "icons": { "32": "icon.png" },
   "browser_action": {
 	"default_icon": "icon.png",
 	"popup": "popup.html"
   },
   "permissions": [
-	"http://dykapi.appspot.com/"
+	"http://dykapi.appspot.com/",
+  "http://en.wikipedia.org/"
   ]
 }
